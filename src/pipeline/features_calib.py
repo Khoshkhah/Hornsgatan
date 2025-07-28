@@ -620,7 +620,7 @@ def _run_simulation_steps_FCD(row: dict, detector: str, path: str, postfix: str,
         if vehicles and vehicles[0] == row["id"]:
             veh_id, veh_length, entry_time, exit_time, vType = traci.inductionloop.getVehicleData(detector)[0]
             lane = traci.vehicle.getLaneID(vehicles[0])
-            logger.info(f"veh = {veh_id}, lane = {lane}, time ={int(simtime)-1},pos = {round(traci.vehicle.getLanePosition(veh_id),2)}")
+            #logger.info(f"veh = {veh_id}, lane = {lane}, time ={int(simtime)-1},pos = {round(traci.vehicle.getLanePosition(veh_id),2)}")
             speed = traci.inductionloop.getLastStepMeanSpeed(detector)
             time = round(entry_time - 1, 2)
             #time = round(entry_time, 2)

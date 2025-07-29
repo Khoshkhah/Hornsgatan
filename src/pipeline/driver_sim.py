@@ -61,9 +61,9 @@ def main(tracker: bool = False):
         )
         builder = builder.with_adapters(tracker_adapter)
     dr = builder.build()
-    dr.display_all_functions(
-        "diagram/diag_simulation.png"
-    )  
+    #dr.display_all_functions(
+    #    "diagram/diag_simulation.png"
+    #)  
     result = dr.execute(["run_sumo"])
     print("Done!!!")
     print(result)

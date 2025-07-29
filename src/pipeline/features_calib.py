@@ -486,9 +486,11 @@ def _calibrate_single_vehicle_FCD(
         if no_speed:
             y_next = (time_error)**2 + 0.1*(1-row["speed_factor"])**2
         else:
-            y_next = (time_error)**2 + (speed_error)**2
-        #y_next = y_next - .5*(row["speed_factor"]-speed_factor_min)/(speed_factor_max-speed_factor_min)
-        #y_next = y_next + (row['depart']-depart_min)/(depart_max-depart_min)
+            #y_next = (time_error)**2 + (speed_error)**2
+            y_next = (time_error)**2 + 2*(speed_error)**2
+            y_next = y_next - .5*(row["speed_factor"]-speed_factor_min)/(speed_factor_max-speed_factor_min)
+            y_next = y_next + (row['depart']-depart_min)/(depart_max-depart_min)
+
 
         opt.tell(x_next, y_next)          # Give result to optimizer
         #logger.info(f"Iter {i}: Input={x_next}, Error={y_next:.4f}, time_error={time_error},  speed_error={speed_error}")

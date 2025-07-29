@@ -486,10 +486,10 @@ def _calibrate_single_vehicle_FCD(
         if no_speed:
             y_next = (time_error)**2 + 0.1*(1-row["speed_factor"])**2
         else:
-            #y_next = (time_error)**2 + (speed_error)**2
-            y_next = (time_error)**2 + 2*(speed_error)**2
-            y_next = y_next - .5*(row["speed_factor"]-speed_factor_min)/(speed_factor_max-speed_factor_min)
-            y_next = y_next + (row['depart']-depart_min)/(depart_max-depart_min)
+            y_next = (time_error)**2 + (speed_error)**2
+            #y_next = (time_error)**2 + 2*(speed_error)**2
+            #y_next = y_next - .5*(row["speed_factor"]-speed_factor_min)/(speed_factor_max-speed_factor_min)
+            #y_next = y_next + (row['depart']-depart_min)/(depart_max-depart_min)
 
 
         opt.tell(x_next, y_next)          # Give result to optimizer
@@ -560,7 +560,7 @@ def _run_simulation_steps_FCD(row: dict, detector: str, path: str, postfix: str,
             departSpeed="max",
             departLane=row["departLane"],
         )
-        traci.vehicle.setSpeedMode(row['id'], 95)
+        #traci.vehicle.setSpeedMode(row['id'], 95)
         row["departSpeed"] = row["speed_factor"] * maxspeed
         traci.vehicle.setLaneChangeMode(row['id'], 0)
     except traci.TraCIException as e:
@@ -621,7 +621,7 @@ def _run_simulation_steps_FCD(row: dict, detector: str, path: str, postfix: str,
 
         if vehicles and vehicles[0] == row["id"]:
             veh_id, veh_length, entry_time, exit_time, vType = traci.inductionloop.getVehicleData(detector)[0]
-            lane = traci.vehicle.getLaneID(vehicles[0])
+            #lane = traci.vehicle.getLaneID(vehicles[0])
             #logger.info(f"veh = {veh_id}, lane = {lane}, time ={int(simtime)-1},pos = {round(traci.vehicle.getLanePosition(veh_id),2)}")
             speed = traci.inductionloop.getLastStepMeanSpeed(detector)
             time = round(entry_time - 1, 2)
@@ -982,9 +982,11 @@ def _calibrate_single_vehicle(
         if no_speed:
             y_next = (time_error)**2 + 0.1*(1-row["speed_factor"])**2
         else:
-            y_next = (time_error)**2 + 2*(speed_error)**2
-            y_next = y_next - .5*(row["speed_factor"]-speed_factor_min)/(speed_factor_max-speed_factor_min)
-            y_next = y_next + (row['depart']-depart_min)/(depart_max-depart_min)
+            y_next = (time_error)**2 + (speed_error)**2
+
+            #y_next = (time_error)**2 + 2*(speed_error)**2
+            #y_next = y_next - .5*(row["speed_factor"]-speed_factor_min)/(speed_factor_max-speed_factor_min)
+            #y_next = y_next + (row['depart']-depart_min)/(depart_max-depart_min)
 
         opt.tell(x_next, y_next)          # Give result to optimizer
         #logger.info(f"Iter {i}: Input={x_next}, Error={y_next:.4f}, time_error={time_error},  speed_error={speed_error}")
